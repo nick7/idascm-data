@@ -1,0 +1,231 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "argument": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "High-level argument type",
+          "$ref": "#/definitions/type"
+        },
+        "operand_type": {
+          "description": "Override operand type (type informaton byte will be skipped)",
+          "$ref": "#/definitions/operand_type"
+        }
+      },
+      "required": [ "type" ]
+    },
+    "command": {
+      "description": "Single command definition",
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/command_name"
+        },
+        "args": {
+          "anyOf": [
+            {
+              "description": "Argument count (Short form for [\"any\", \"any\", ...])",
+              "type": "integer",
+              "minimum": -1,
+              "maximum": 24
+            },
+            {
+              "description": "Argument definition list",
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "description": "Argument type",
+                    "$ref": "#/definitions/type"
+                  },
+                  {
+                    "description": "Argument definition",
+                    "$ref": "#/definitions/argument"
+                  }
+                ]
+              },
+              "maxItems": 24
+            }
+          ]
+        },
+        "format": {
+          "description": "INI Command Format (Community Notation - SannyBuilder)",
+          "pattern": "^([a-zA-Z 0-9_\\-\\.%+=<>*/:,]+)$"
+        },
+        "flags": {
+          "description": "Command flag list",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/command_flag"
+          }
+        },
+        "comment": {
+          "description": "Any user text",
+          "type": "string"
+        }
+      }
+    },
+    "command_name": {
+      "description": "Command Name (Rockstar Notation - UPPERCASE)",
+      "type": "string",
+      "pattern": "^([A-Z_0-9]+|\\{|\\})$"
+    },
+    "command_flag": {
+      "enum": [
+        "stop",
+        "jump",
+        "call",
+        "return",
+        "condition",
+        "conditional",
+        "function_call",
+        "unsupported",
+        "macro",
+        "cleo"
+      ]
+    },
+    "operand_type": {
+      "enum": [
+        "unknown",
+        "none",
+        "local",
+        "global",
+        "timer",
+        "local_array",
+        "global_array",
+        "string",
+        "int0",
+        "int8",
+        "int16",
+        "int32",
+        "int64",
+        "float0",
+        "float8",
+        "float16",
+        "float16i",
+        "float24",
+        "float32",
+        "string8",
+        "string16"
+      ]
+    },
+    "type": {
+      "anyOf": [
+        {
+          "const": "unknown",
+          "description": "Void type (should'nt be used directly)"
+        },
+        {
+          "const": "any",
+          "description": "Any type  (default behaviour)"
+        },
+        {
+          "enum": [ "integer", "int" ],
+          "description": "Variable size signed integer"
+        },
+        {
+          "enum": [ "real", "float" ],
+          "description": "Variable size floating point"
+        },
+        {
+          "enum": [ "string" ],
+          "description": "Any string type (operand_type required for GTA3 and GTAVC)"
+        },
+        {
+          "enum": [ "variadic", "..." ],
+          "description": "Variadic parameter list (ending with operand_type::none)"
+        },
+        {
+          "const": "address",
+          "description": "Subroutine or label address (jsut like in GOTO etc)"
+        },
+        {
+          "enum": [ "constant", "const" ],
+          "description": "Immediate value argument (NOT a variable)"
+        },
+        {
+          "const": "variable",
+          "description": "Any variable (local or global)"
+        },
+        {
+          "const": "global",
+          "description": "Abstract global variable (memory reference)"
+        },
+        {
+          "const": "local",
+          "description": "Abstract local variable (IDA register)"
+        },
+        {
+          "enum": [ "constant_integer", "const_int" ],
+          "description": "Immediate value integer"
+        },
+        {
+          "enum": [ "constant_real", "const_float" ],
+          "description": "Immediate value floating-point"
+        },
+        {
+          "enum": [ "constant_string", "const_string" ],
+          "description": "Immediate value string"
+        },
+        {
+          "enum": [ "variable_integer", "variable_int" ],
+          "description": "Any integer variable (local or global)"
+        },
+        {
+          "enum": [ "global_integer", "global_int" ],
+          "description": "Global integer variable"
+        },
+        {
+          "enum": [ "local_integer", "local_int" ],
+          "description": "Local integer variable"
+        },
+        {
+          "enum": [ "variable_real", "variable_float" ],
+          "description": "Any floating-point variable (local or global)"
+        },
+        {
+          "enum": [ "global_real", "global_float" ],
+          "description": "Global floating-point variable"
+        },
+        {
+          "enum": [ "local_real", "local_float" ],
+          "description": "Local floating-point variable"
+        },
+        {
+          "const": "variable_string",
+          "description": "Any string variable (local or global) (GTA:SA)"
+        },
+        {
+          "const": "global_string",
+          "description": "Global string variable (GTA:SA)"
+        },
+        {
+          "const": "local_string",
+          "description": "Local string variable (GTA:SA)"
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "This configuration unique version"
+    },
+    "parent": {
+      "description": "Inherit another configuration",
+      "type": "string"
+    },
+    "commands": {
+      "description": "Command definitions (opcodes as keys)",
+      "type": "object",
+      "patternProperties": {
+        "^(\\d+|0x[\\da-fA-F]+)$": {
+          "$ref": "#/definitions/command"
+        }
+      }
+    }
+  },
+  "required": [ "version" ]
+}
