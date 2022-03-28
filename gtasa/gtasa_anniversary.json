@@ -1,0 +1,576 @@
+{
+  "$schema": "../schema/configuration.json",
+  "meta": {
+    "timestamp": "2022-02-06T13:38:23.671891+00:00",
+    "sources": [
+      "https://github.com/sannybuilder/data",
+      "https://github.com/sannybuilder/library"
+    ]
+  },
+  "version": "gtasa_anniversary",
+  "parent": "gtasa",
+  "commands": {
+    "0x0a49": {
+      "name": "IS_XBOX_VERSION",
+      "flags": [
+        "condition"
+      ],
+      "format": "  NOP_false",
+      "desc": "Returns true for Xbox versions of the game"
+    },
+    "0x0a4a": {
+      "name": "GET_PC_MOUSE_MOVEMENT",
+      "args": [
+        "int",
+        "int"
+      ],
+      "format": "store_joystick_X_offset_to %1h% Y_offset_to %2h%",
+      "desc": "Gives the offset of the mouse or right thumbstick movement"
+    },
+    "0x0a4b": {
+      "name": "IS_PC_USING_JOYPAD",
+      "flags": [
+        "condition"
+      ],
+      "format": "  controls_set_to_joystick",
+      "desc": "Returns true if players controls are set to joystick and not mouse+keyboard"
+    },
+    "0x0a4c": {
+      "name": "IS_MOUSE_USING_VERTICAL_INVERSION",
+      "flags": [
+        "condition"
+      ],
+      "format": "  mouse_not_inverted_vertically",
+      "desc": "Returns true if the players settings are set to invert the mouse"
+    },
+    "0x0a4d": {
+      "name": "IS_JAPANESE_VERSION",
+      "flags": [
+        "condition"
+      ],
+      "format": "  NOP_false",
+      "desc": "Returns true for Japanese versions of the game"
+    },
+    "0x0a4e": {
+      "name": "IS_XBOX_PLAYER2_PRESSING_START",
+      "flags": [
+        "condition"
+      ],
+      "format": "  NOP_false",
+      "desc": "Returns true on Xbox versions of the game if player 2 is pressing the start button"
+    },
+    "0x0a4f": {
+      "name": "FINISHED_WITH_XBOX_PLAYER2",
+      "flags": [
+        "condition"
+      ],
+      "format": "   NOP_false"
+    },
+    "0x0a50": {
+      "name": "DO_DEBUG_STUFF",
+      "format": "increment_useless_flag"
+    },
+    "0x0a51": {
+      "name": "IS_WIDGET_PRESSED",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_widget_pressed %1d%",
+      "desc": "Returns true if the button widget icon on the screen is touched"
+    },
+    "0x0a52": {
+      "name": "IS_WIDGET_RELEASED",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_widget_released %1d%",
+      "desc": "Returns true if the button widget icon on the screen is pressed and released"
+    },
+    "0x0a53": {
+      "name": "IS_WIDGET_DOUBLETAPPED",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_widget_doubletapped %1d%",
+      "desc": "Returns true if the button widget icon on the screen is double-tapped"
+    },
+    "0x0a54": {
+      "name": "IS_WIDGET_SWIPED",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_widget_swiped %1d%",
+      "desc": "Returns true if the button widget icon on the screen is swiped"
+    },
+    "0x0a55": {
+      "name": "IS_WIDGET_SWIPED_LEFT",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_widget_swiped_left %1d%",
+      "desc": "Returns true if the button widget icon on the screen is swiped left"
+    },
+    "0x0a56": {
+      "name": "IS_WIDGET_SWIPED_RIGHT",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_widget_swiped_right %1d%",
+      "desc": "Returns true if the button widget icon on the screen is swiped right"
+    },
+    "0x0a57": {
+      "name": "DO_MISSION_SKIP",
+      "args": 2,
+      "flags": [
+        "condition"
+      ],
+      "format": "  do_mission_skip_get_current_mission_page %1d% get_current_skip_to_mission_number %2d%",
+      "desc": "Checks whether the task is skipped (debugging function, the game has a menu page for selecting a task, and you can choose to skip a task. The official version of the game is not enabled), if you skip the task, return to the page where the current task is located, and the ID of the current task. This command is always invalid in the mobile version of SA, returns false, and the returned 2 values are 0"
+    },
+    "0x0a58": {
+      "name": "GET_MISSION_NUM",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  skip_to_mission_num %1d%",
+      "desc": "Returns the ID of the next task (0A57), otherwise -1"
+    },
+    "0x0a59": {
+      "name": "GET_MISSION_PAGE",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  skip_to_mission_page %1d%",
+      "desc": "Returns the page where the next task (0A57) is located, otherwise 0"
+    },
+    "0x0a5a": {
+      "name": "GET_WIDGET_VALUE",
+      "args": 2,
+      "format": "get_widget %1d% value_to %2d%",
+      "comment": "float"
+    },
+    "0x0a5b": {
+      "name": "GET_WIDGET_VALUE2",
+      "args": 3,
+      "format": "get_widget %1d% value2_to %2d% %3d%",
+      "comment": "float"
+    },
+    "0x0a5c": {
+      "name": "DISPLAY_TEXT_WIDGET",
+      "args": [
+        "any",
+        "any",
+        "string"
+      ],
+      "format": "display_missions_text_position %1d% %2d% GXT %3g%"
+    },
+    "0x0a5d": {
+      "name": "GET_WIDGET_POSITION",
+      "args": 5,
+      "format": "get_widget %1d% position_to %2d% %3d% scale_to %4d% %5d%"
+    },
+    "0x0a5e": {
+      "name": "SET_WIDGET_VALUE",
+      "args": 2,
+      "format": "set_widget %1d% value %2d%",
+      "comment": "float"
+    },
+    "0x0a5f": {
+      "name": "SET_SLIDER_RANGE",
+      "args": 3,
+      "format": "set_widget %1d% slider_range %2d% %3d%",
+      "comment": "float"
+    },
+    "0x0a60": {
+      "name": "ADD_WIDGET_FLAG",
+      "args": 2,
+      "format": "widget %1d% add_flag %2d%"
+    },
+    "0x0a61": {
+      "name": "REMOVE_WIDGET_FLAG",
+      "args": 2,
+      "format": "widget %1d% remove_flag %2d%"
+    },
+    "0x0a62": {
+      "name": "ADD_BUTTON_FLAG",
+      "args": 2,
+      "format": "widget %1d% add_button_flag %2d%"
+    },
+    "0x0a63": {
+      "name": "REMOVE_BUTTON_FLAG",
+      "args": 2,
+      "format": "widget %1d% remove_button_flag %2d%"
+    },
+    "0x0a64": {
+      "name": "IS_TOUCH_ENABLED",
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_touch_enabled"
+    },
+    "0x0a65": {
+      "name": "IS_FINALBUILD",
+      "flags": [
+        "condition"
+      ],
+      "format": "  skip_intro_cutscene",
+      "desc": "Returns true if this is the final build of the game (always true)"
+    },
+    "0x0a66": {
+      "name": "WRITE_LOG",
+      "args": [
+        "string"
+      ],
+      "format": "write_log %1k%",
+      "comment": "128-byte null-terminated string"
+    },
+    "0x0a67": {
+      "name": "WRITE_LOG_INT",
+      "args": [
+        "any",
+        "any",
+        "any",
+        "string"
+      ],
+      "format": "write_log_int %1d% %2d% %3d% %4k%",
+      "comment": "128-byte null-terminated string"
+    },
+    "0x0a68": {
+      "name": "WRITE_LOG_FLOAT",
+      "args": [
+        "any",
+        "any",
+        "any",
+        "string"
+      ],
+      "format": "write_log_float %1d% %2d% %3d% %4k%",
+      "comment": "128-byte null-terminated string"
+    },
+    "0x0a69": {
+      "name": "CREATE_SHOP_WIDGET",
+      "args": [
+        "string"
+      ],
+      "format": "create_shop_widget_menu %1g%",
+      "desc": "Creates a touch-type store menu interface unique to the mobile version of SA"
+    },
+    "0x0a6a": {
+      "name": "ADD_SHOP_ITEM",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "add_shop_widget_menu_item %1g% price %2d%",
+      "desc": "Adds product items and prices to the store menu interface (0A69)"
+    },
+    "0x0a6b": {
+      "name": "DELETE_WIDGET",
+      "args": 1,
+      "format": "delete_widget %1d%",
+      "desc": "Removes a widget icon from the screen (cannot be restored)"
+    },
+    "0x0a6c": {
+      "name": "SET_EQUIPPED_ITEM",
+      "args": 2,
+      "format": "set_widget %1d% equipped_item %2d%"
+    },
+    "0x0a6d": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional %1g% hid_type %2d%"
+    },
+    "0x0a6e": {
+      "name": "SET_WIDGET_TEXTURE",
+      "args": [
+        "any",
+        "string"
+      ],
+      "format": "set_widget %1d% texture %2k%",
+      "comment": "128-byte null-terminated string"
+    },
+    "0x0a6f": {
+      "name": "CHECKPOINT_SAVE",
+      "args": 1,
+      "format": "checkpoint_save %1d%"
+    },
+    "0x0a70": {
+      "name": "DISPLAY_TEXT_CLAMPED",
+      "args": [
+        "any",
+        "any",
+        "string",
+        "any"
+      ],
+      "format": "display_text_clamped_position %1d% %2d% GXT %3g% scale %4d%",
+      "comment": "text_draw"
+    },
+    "0x0a71": {
+      "name": "DISPLAY_TEXT_WITH_NUMBER_CLAMPED",
+      "args": [
+        "any",
+        "any",
+        "string",
+        "any",
+        "any"
+      ],
+      "format": "display_text_clamped_position %1d% %2d% GXT %3g% with_number %4d% scale %5d%",
+      "comment": "text_draw"
+    },
+    "0x0a72": {
+      "name": "AUTO_SAVE",
+      "format": "auto_save_checkpoint",
+      "desc": "Saves the game progress (with setting SaveGameStateType to 1)"
+    },
+    "0x0a73": {
+      "name": "SET_WIDGET_VALUE3",
+      "args": 4,
+      "format": "set_widget %1d% value3 %2d% %3d% %4d%",
+      "comment": "float"
+    },
+    "0x0a74": {
+      "name": "IS_CHECKPOINT_RESUMING",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_checkpoint_resuming %1d%",
+      "comment": "IsGameResuming //bool"
+    },
+    "0x0a75": {
+      "name": "SET_ACTIVE_MENU_ITEM_CAR_MODS",
+      "args": 2,
+      "flags": [
+        "condition"
+      ],
+      "format": "  set_active_square_color_panel %1d% find_car_colour %2d%"
+    },
+    "0x0a76": {
+      "name": "HID_IMPLEMENTS",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  hid_implements %1d%"
+    },
+    "0x0a77": {
+      "name": "CHECKPOINT_SAVE_ODDJOB",
+      "args": 1,
+      "format": "checkpoint_save_oddjob %1d%"
+    },
+    "0x0a78": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL_TOUCH",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional_touch %1g% hid_type %2d%"
+    },
+    "0x0a79": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL_HID",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional_hid %1g% hid_type %2d%"
+    },
+    "0x0a7a": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL_TOUCH_CLASSIC",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional_touch_classic %1g% hid_type %2d%"
+    },
+    "0x0a7b": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL_TOUCH_ADAPTED",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional_touch_adapted %1g% hid_type %2d%"
+    },
+    "0x0a7c": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL_HID_JOYPAD",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional_hid_joypad %1g% hid_type %2d%"
+    },
+    "0x0a7d": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL_HID_KEYBOARD",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional_hid_keyboard %1g% hid_type %2d%"
+    },
+    "0x0a7e": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL_TOUCH_ANALOG",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional_touch_analog %1g% hid_type %2d%"
+    },
+    "0x0a7f": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL_TOUCH_DIGITAL",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional_touch_digital %1g% hid_type %2d%"
+    },
+    "0x0a80": {
+      "name": "PRINT_HELP_FOREVER_CONDITIONAL_TOUCH_FLICK",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_forever_conditional_touch_flick %1g% hid_type %2d%"
+    },
+    "0x0a81": {
+      "name": "PRINT_HELP_CONDITIONAL",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_conditional %1g% hid_type %2d%"
+    },
+    "0x0a82": {
+      "name": "PRINT_HELP_CONDITIONAL_TOUCH",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_conditional_touch %1g% hid_type %2d%"
+    },
+    "0x0a83": {
+      "name": "PRINT_HELP_CONDITIONAL_HID",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_conditional_hid %1g% hid_type %2d%"
+    },
+    "0x0a84": {
+      "name": "PRINT_HELP_CONDITIONAL_TOUCH_CLASSIC",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_conditional_touch_classic %1g% hid_type %2d%"
+    },
+    "0x0a85": {
+      "name": "PRINT_HELP_CONDITIONAL_TOUCH_ADAPTED",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_conditional_touch_adapted %1g% hid_type %2d%"
+    },
+    "0x0a86": {
+      "name": "PRINT_HELP_CONDITIONAL_HID_JOYPAD",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_conditional_hid_joypad %1g% hid_type %2d%"
+    },
+    "0x0a87": {
+      "name": "PRINT_HELP_CONDITIONAL_HID_KEYBOARD",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_conditional_hid_keyboard %1g% hid_type %2d%"
+    },
+    "0x0a88": {
+      "name": "PRINT_HELP_CONDITIONAL_TOUCH_ANALOG",
+      "args": [
+        "string",
+        "any"
+      ],
+      "format": "print_help_conditional_touch_analog %1g% hid_type %2d%"
+    },
+    "0x0a89": {
+      "name": "SET_WIDGET_VALUE2",
+      "args": 3,
+      "format": "set_widget %1d% value2 %2d% %3d%",
+      "comment": "float"
+    },
+    "0x0a8a": {
+      "name": "SET_WIDGET_INFO",
+      "args": [
+        "any",
+        "any",
+        "any",
+        "any",
+        "any",
+        "any",
+        "any",
+        "string"
+      ],
+      "format": "set_widget %1d% info %2d% %3d% %4d% %5d% %6d% %7d% %8g%"
+    },
+    "0x0a8b": {
+      "name": "SET_WIDGET_INFO2",
+      "args": [
+        "any",
+        "any",
+        "any",
+        "any",
+        "any",
+        "string",
+        "string"
+      ],
+      "format": "set_widget %1d% info2 %2d% %3d% %4d% %5d% %6g% %7g%"
+    },
+    "0x0a8c": {
+      "name": "LOAD_ALL_STREAMING_MODELS",
+      "format": "load_all_requested_models",
+      "desc": "Loads all models immediately, faster than 038B",
+      "comment": "No time to pause. load faster than 038B"
+    },
+    "0x0a8d": {
+      "name": "IS_HID_RELEASED",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_hid_released %1d%"
+    },
+    "0x0a8e": {
+      "name": "UNLOCK_ACHIEVEMENT",
+      "args": 1,
+      "format": "NOP %1d%",
+      "desc": "Unlocks the achievement"
+    },
+    "0x0a8f": {
+      "name": "RELEASE_WEAPON_LOCK",
+      "format": "set_player_weapon_lock_on_target"
+    },
+    "0x0a90": {
+      "name": "IS_HID_PRESSED",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_hid_pressed %1d%"
+    }
+  },
+  "debug": {
+    "unsupported": []
+  }
+}

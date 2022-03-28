@@ -5,15 +5,22 @@
       "type": "object",
       "properties": {
         "type": {
-          "description": "High-level argument type",
+          "title": "High-level argument type",
           "$ref": "#/definitions/type"
         },
+        "enum": {
+          "type": "string",
+          "title": "Enumeration unique name",
+          "pattern": "^([A-Z0-9_]+)$"
+        },
         "operand_type": {
-          "description": "Override operand type (type informaton byte will be skipped)",
+          "title": "Override operand type",
+          "description": "NOTE: Type informaton byte will not be read with this property.",
           "$ref": "#/definitions/operand_type"
         }
       },
-      "required": [ "type" ]
+      "required": [ "type" ],
+      "additionalProperties": false
     },
     "command": {
       "description": "Single command definition",
@@ -25,33 +32,35 @@
         "args": {
           "anyOf": [
             {
-              "description": "Argument count (Short form for [\"any\", \"any\", ...])",
+              "title": "Argument count",
+              "description": "Short form for `[any, any, ...]`",
               "type": "integer",
               "minimum": -1,
-              "maximum": 24
+              "maximum": 32
             },
             {
-              "description": "Argument definition list",
+              "title": "Argument definition list",
               "type": "array",
               "items": {
                 "anyOf": [
                   {
-                    "description": "Argument type",
+                    "title": "Argument type",
                     "$ref": "#/definitions/type"
                   },
                   {
-                    "description": "Argument definition",
+                    "title": "Argument definition",
                     "$ref": "#/definitions/argument"
                   }
                 ]
               },
-              "maxItems": 24
+              "maxItems": 32
             }
           ]
         },
         "format": {
-          "description": "INI Command Format (Community Notation - SannyBuilder)",
-          "pattern": "^([a-zA-Z 0-9_\\-\\.%+=<>*/:,]+)$"
+          "title": "INI Command Format",
+          "description": "Community Notation - SannyBuilder",
+          "pattern": "^([a-zA-Z 0-9_\\-\\.%+=<>*/:,|~&^]+)$"
         },
         "flags": {
           "description": "Command flag list",
@@ -60,29 +69,80 @@
             "$ref": "#/definitions/command_flag"
           }
         },
+        "desc": {
+          "description": "Short command description",
+          "type": "string"
+        },
         "comment": {
           "description": "Any user text",
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "command_name": {
-      "description": "Command Name (Rockstar Notation - UPPERCASE)",
+      "title": "Command Name",
+      "description": "Rockstar Notation - UPPERCASE",
       "type": "string",
       "pattern": "^([A-Z_0-9]+|\\{|\\})$"
     },
     "command_flag": {
-      "enum": [
-        "stop",
-        "jump",
-        "call",
-        "return",
-        "condition",
-        "conditional",
-        "function_call",
-        "unsupported",
-        "macro",
-        "cleo"
+      "anyOf":[
+        {
+          "const": "stop",
+          "title": "Don't process next address (`CF_STOP`)."
+        },
+        {
+          "const": "branch",
+          "title": "Branch execution flow (`CF_JUMP`).",
+          "description": "Requires `address`, `mission` or `script` type."
+        },
+        {
+          "const": "call",
+          "title": "GOSUB-like command (`CF_CALL`).",
+          "description": "Requires `branch` flag."
+        },
+        {
+          "const": "return",
+          "title": "Return from function.",
+          "description": " Required for proper IDA analysis."
+        },
+        {
+          "const": "condition",
+          "title": "Modifies condition flag"
+        },
+        {
+          "const": "conditional",
+          "title": "Uses condition flag"
+        },
+        {
+          "const": "function_call",
+          "title": "Advanced function call with parameters and variable stack",
+          "description": "NOTE: GTA:LCS and GTA:VCS only"
+        },
+        {
+          "const": "switch",
+          "title": "Switch idiom",
+          "description": "NOTE: GTA:SA only"
+        },
+        {
+          "const": "dependent",
+          "title": "This command depends on previous one",
+          "description": "(e.g. `SWITCH_CONTINUED`)"
+        },
+        {
+          "const": "unsupported",
+          "title": "No inplementation provided",
+          "description": "Will crash execution process."
+        },
+        {
+          "const": "macro",
+          "title": "Compiler only high-level construction (e.g. variable declaration)"
+        },
+        {
+          "const": "cleo",
+          "description": "CLEO library extension"
+        }
       ]
     },
     "operand_type": {
@@ -107,90 +167,115 @@
         "float24",
         "float32",
         "string8",
-        "string16"
+        "string16",
+        "string128"
       ]
     },
     "type": {
       "anyOf": [
         {
           "const": "unknown",
-          "description": "Void type (should'nt be used directly)"
+          "title": "Void type",
+          "description": "This type should not be used directly."
         },
         {
           "const": "any",
-          "description": "Any type  (default behaviour)"
+          "title": "Any type",
+          "description": "Default behaviour (acceptable in most cases)."
         },
         {
           "enum": [ "integer", "int" ],
-          "description": "Variable size signed integer"
+          "title": "Variable size signed integer"
         },
         {
           "enum": [ "real", "float" ],
-          "description": "Variable size floating point"
+          "title": "Variable size floating point"
         },
         {
           "enum": [ "string" ],
-          "description": "Any string type (operand_type required for GTA3 and GTAVC)"
+          "title": "Any string type",
+          "description": "NOTE: Explicit `operand_type` is required for GTA3 and GTA:VC."
         },
         {
           "enum": [ "variadic", "..." ],
-          "description": "Variadic parameter list (ending with operand_type::none)"
+          "title": "Variadic parameter list (ending with operand_type::none)"
         },
         {
           "const": "address",
-          "description": "Subroutine or label address (jsut like in GOTO etc)"
+          "title": "Subroutine or label address",
+          "description": "Requires `branch` flag (Example: `GOTO` command)"
+        },
+        {
+          "const": "mission",
+          "title": "Mission ID (segment)"
+        },
+        {
+          "const": "script",
+          "title": "Streamable script ID"
+        },
+        {
+          "const": "model",
+          "title": "Model Identifier",
+          "description": "Any in-game model ID"
+        },
+        {
+          "const": "handle",
+          "title": "Resource handle",
+          "description": "Any in-game object (e.g. player, car, pickup)"
         },
         {
           "enum": [ "constant", "const" ],
-          "description": "Immediate value argument (NOT a variable)"
+          "title": "Immediate value argument",
+          "description": "This argument is NOT a variable."
         },
         {
           "const": "variable",
-          "description": "Any variable (local or global)"
+          "title": "Any variable (local or global)",
+          "description": "This argument can be changed by command"
         },
         {
           "const": "global",
-          "description": "Abstract global variable (memory reference)"
+          "title": "Abstract global variable (memory reference)"
         },
         {
           "const": "local",
-          "description": "Abstract local variable (IDA register)"
+          "title": "Abstract local variable (IDA register)"
         },
         {
           "enum": [ "constant_integer", "const_int" ],
-          "description": "Immediate value integer"
+          "title": "Immediate value integer"
         },
         {
           "enum": [ "constant_real", "const_float" ],
-          "description": "Immediate value floating-point"
+          "title": "Immediate value floating-point"
         },
         {
           "enum": [ "constant_string", "const_string" ],
-          "description": "Immediate value string"
+          "title": "Immediate value string"
         },
         {
           "enum": [ "variable_integer", "variable_int" ],
-          "description": "Any integer variable (local or global)"
+          "title": "Any integer variable (local or global)"
         },
         {
           "enum": [ "global_integer", "global_int" ],
-          "description": "Global integer variable"
+          "title": "Global integer variable"
         },
         {
           "enum": [ "local_integer", "local_int" ],
-          "description": "Local integer variable"
+          "title": "Local integer variable"
         },
         {
           "enum": [ "variable_real", "variable_float" ],
-          "description": "Any floating-point variable (local or global)"
+          "title": "Any floating-point variable (local or global)"
         },
         {
           "enum": [ "global_real", "global_float" ],
-          "description": "Global floating-point variable"
+          "title": "Global floating-point variable"
         },
         {
           "enum": [ "local_real", "local_float" ],
-          "description": "Local floating-point variable"
+          "title": "Local floating-point variable"
         },
         {
           "const": "variable_string",
@@ -198,24 +283,67 @@
         },
         {
           "const": "global_string",
-          "description": "Global string variable (GTA:SA)"
+          "title": "Global string variable (GTA:SA)"
         },
         {
           "const": "local_string",
-          "description": "Local string variable (GTA:SA)"
+          "title": "Local string variable (GTA:SA)"
+        }
+      ]
+    },
+    "meta": {
+      "type": "object",
+      "description": "Optional meta-information",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "author": {
+          "type": "string"
+        }
+      }
+    },
+    "version": {
+      "anyOf":[
+        {
+          "enum": [ "gta3", "gta3_ps2", "gta3_xbox", "gta3_pc", "gta3_pc_cleo", "gta3_anniversary", "gta3_definitive", "gta3_custom" ],
+          "description": "Grand Theft Auto III"
+        },
+        {
+          "enum": [ "gtavc", "gtavc_ps2", "gtavc_xbox", "gtavc_pc", "gtavc_pc_cleo", "gtavc_anniversary", "gtavc_definitive", "gtavc_custom" ],
+          "description": "Grand Theft Auto: Vice City"
+        },
+        {
+          "enum": [ "gtasa", "gtasa_ps2", "gtasa_xbox", "gtasa_pc", "gtasa_pc_cleo", "gtasa_anniversary", "gtasa_definitive", "gtasa_custom" ],
+          "description": "Grand Theft Auto: San Andreas"
+        },
+        {
+          "enum": [ "gtalcs", "gtalcs_ps2", "gtalcs_psp", "gtalcs_anniversary" ],
+          "description": "Grand Theft Auto: Liberty City Stories"
+        },
+        {
+          "enum": [ "gtavcs", "gtavcs_ps2", "gtavcs_psp" ],
+          "description": "Grand Theft Auto: Vice City Stories"
         }
       ]
     }
   },
   "type": "object",
   "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "meta": {
+      "$ref": "#/definitions/meta"
+    },
     "version": {
-      "type": "string",
-      "description": "This configuration unique version"
+      "description": "This configuration unique version",
+      "$ref": "#/definitions/version"
     },
     "parent": {
       "description": "Inherit another configuration",
-      "type": "string"
+      "$ref": "#/definitions/version"
     },
     "commands": {
       "description": "Command definitions (opcodes as keys)",
@@ -225,7 +353,37 @@
           "$ref": "#/definitions/command"
         }
       }
+    },
+    "enums": {
+      "type": "object",
+      "patternProperties": {
+        "^([A-Z0-9_]+)$": {
+          "anyOf":[
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^([A-Z0-9_]+)$"
+              }
+            },
+            {
+              "type": "object",
+              "patternProperties": {
+                "^([A-Z0-9_]+)$": {
+                  "type": "integer"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "debug": {
+      "type": "object"
     }
   },
-  "required": [ "version" ]
+  "required": [ "version" ],
+  "additionalProperties": false
 }

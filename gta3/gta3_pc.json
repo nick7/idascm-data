@@ -1,0 +1,374 @@
+{
+  "$schema": "../schema/configuration.json",
+  "meta": {
+    "timestamp": "2022-02-06T13:38:21.944513+00:00",
+    "sources": [
+      "https://github.com/sannybuilder/data",
+      "https://github.com/sannybuilder/library"
+    ]
+  },
+  "version": "gta3_pc",
+  "parent": "gta3",
+  "commands": {
+    "0x0453": {
+      "name": "SET_OBJECT_ROTATION",
+      "args": 4,
+      "format": "object %1d% set_rotation %2d% %3d% %4d%",
+      "desc": "Sets the object rotation along X, Y and Z axis"
+    },
+    "0x0454": {
+      "name": "GET_DEBUG_CAMERA_COORDINATES",
+      "args": 3,
+      "format": "get_debug_camera_coordinates %1d% %2d% %3d%",
+      "desc": "Returns the debug camera position"
+    },
+    "0x0455": {
+      "name": "GET_DEBUG_CAMERA_FRONT_VECTOR",
+      "args": 3,
+      "format": "get_debug_camera_front_vector %1d% %2d% %3d%",
+      "desc": "Stores the debug camera front vector"
+    },
+    "0x0456": {
+      "name": "IS_PLAYER_TARGETTING_ANY_CHAR",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_player_targetting_any_char %1d%",
+      "desc": "Returns true if the player is aiming at any character"
+    },
+    "0x0457": {
+      "name": "IS_PLAYER_TARGETTING_CHAR",
+      "args": 2,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_player_targetting_char %1d% %2d%",
+      "desc": "Returns true if the player is aiming at the specified character"
+    },
+    "0x0458": {
+      "name": "IS_PLAYER_TARGETTING_OBJECT",
+      "args": 2,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_player_targetting_object %1d% %2d%",
+      "desc": "Returns true if the player is aiming at the specified object"
+    },
+    "0x0459": {
+      "name": "TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME",
+      "args": 1,
+      "format": "terminate_all_scripts_with_this_name %1d%",
+      "desc": "Ends any script which name (03A4) matches the given string"
+    },
+    "0x045a": {
+      "name": "DISPLAY_TEXT_WITH_NUMBER",
+      "args": [
+        "any",
+        "any",
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any"
+      ],
+      "format": "text_draw_1number %1d% %2d% %3g% %4d%",
+      "desc": "Draws text with 1 number"
+    },
+    "0x045b": {
+      "name": "DISPLAY_TEXT_WITH_2_NUMBERS",
+      "args": [
+        "any",
+        "any",
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any",
+        "any"
+      ],
+      "format": "text_draw_2numbers %1d% %2d% %3g% %4d% %5d%",
+      "desc": "Draws text with 2 numbers"
+    },
+    "0x045c": {
+      "name": "FAIL_CURRENT_MISSION",
+      "format": "fail_current_mission",
+      "desc": "Terminates the active mission by executing its mission cleanup routine"
+    },
+    "0x045d": {
+      "name": "GET_CLOSEST_OBJECT_OF_TYPE",
+      "args": 6,
+      "format": "get_closest_object_of_type %1d% %2d% %3d% %4d% %5d% %6d%",
+      "desc": "Returns the handle of an object with the specified model located in the 2D area, or -1 otherwise"
+    },
+    "0x045e": {
+      "name": "PLACE_OBJECT_RELATIVE_TO_OBJECT",
+      "args": 5,
+      "format": "place_object_relative_to_object %1d% %2d% %3d% %4d% %5d%",
+      "desc": "Places the object relative to the other object"
+    },
+    "0x045f": {
+      "name": "SET_ALL_OCCUPANTS_OF_CAR_LEAVE_CAR",
+      "args": 1,
+      "format": "set_all_occupants_of_car_leave_car %1d%",
+      "desc": "Sets the driver and all passengers' objective to leave the vehicle"
+    },
+    "0x0460": {
+      "name": "SET_INTERPOLATION_PARAMETERS",
+      "args": 2,
+      "format": "set_interpolation_parameters %1d% %2d%",
+      "desc": "Sets how long the camera transition will last"
+    },
+    "0x0461": {
+      "name": "GET_CLOSEST_CAR_NODE_WITH_HEADING_TOWARDS_POINT",
+      "args": 9,
+      "format": "get_closest_car_node_with_heading_towards_point %1d% %2d% %3d% %4d% %5d% %6d% %7d% %8d% %9d%",
+      "desc": "Returns the position and heading of the closest vehicle path node to the specified position and with rotation towards the point"
+    },
+    "0x0462": {
+      "name": "GET_CLOSEST_CAR_NODE_WITH_HEADING_AWAY_POINT",
+      "args": 9,
+      "format": "get_closest_car_node_with_heading_away_point %1d% %2d% %3d% %4d% %5d% %6d% %7d% %8d% %9d%",
+      "desc": "Returns the position and heading of the closest vehicle path node to the specified position and with rotation away from the point"
+    },
+    "0x0463": {
+      "name": "GET_DEBUG_CAMERA_POINT_AT",
+      "args": 3,
+      "format": "get_debug_camera_point_at %1d% %2d% %3d%",
+      "desc": "Stores the location the debug camera is pointing to"
+    },
+    "0x0464": {
+      "name": "ATTACH_CHAR_TO_CAR",
+      "args": 8,
+      "format": "attach_char_to_car %1d% %2d% %3d% %4d% %5d% %6d% %7d% %8d%",
+      "desc": "Puts character into a turret on the vehicle, allowing them to shoot"
+    },
+    "0x0465": {
+      "name": "DETACH_CHAR_FROM_CAR",
+      "args": 1,
+      "format": "detach_char_from_car %1d%",
+      "desc": "Removes the character from turret mode (0464)"
+    },
+    "0x0466": {
+      "name": "SET_CAR_CHANGE_LANE",
+      "args": 2,
+      "format": "set_car_change_lane %1d% %2d%",
+      "desc": "Set's whether the AI driver will occupy the fast (left) lane on a two-way road"
+    },
+    "0x0467": {
+      "name": "CLEAR_CHAR_LAST_WEAPON_DAMAGE",
+      "args": 1,
+      "format": "clear_char_last_weapon_damage %1d%",
+      "desc": "Clears the character's last weapon damage (see 031D)"
+    },
+    "0x0468": {
+      "name": "CLEAR_CAR_LAST_WEAPON_DAMAGE",
+      "args": 1,
+      "format": "clear_car_last_weapon_damage %1d%",
+      "desc": "Clears the vehicle's last weapon damage (see 031E)"
+    },
+    "0x0469": {
+      "name": "GET_RANDOM_COP_IN_AREA",
+      "args": 10,
+      "format": "get_random_cop_in_area %1d% %2d% %3d% %4d% %5d% %6d% %7d% %8d% %9d% %10d%",
+      "desc": "Returns the handle of a random law enforcement pedestrian in the 2D area, or -1 otherwise"
+    },
+    "0x046a": {
+      "name": "GET_RANDOM_COP_IN_ZONE",
+      "args": 7,
+      "format": "get_random_cop_in_zone %1d% %2d% %3d% %4d% %5d% %6d% %7d%",
+      "desc": "Returns the handle of a random law enforcement ped in the map zone"
+    },
+    "0x046b": {
+      "name": "SET_CHAR_OBJ_FLEE_CAR",
+      "args": 2,
+      "format": "set_char_obj_flee_car %1d% %2d%",
+      "desc": "Makes the character leave their car and run away from it"
+    },
+    "0x046c": {
+      "name": "GET_DRIVER_OF_CAR",
+      "args": 2,
+      "format": "%2d% = car %1d% driver",
+      "desc": "Returns the car's driver handle"
+    },
+    "0x046d": {
+      "name": "GET_NUMBER_OF_FOLLOWERS",
+      "args": 2,
+      "format": "get_number_of_followers %1d% %2d%",
+      "desc": "Returns the number of members which are in a group of the character (01DE)"
+    },
+    "0x046e": {
+      "name": "GIVE_REMOTE_CONTROLLED_MODEL_TO_PLAYER",
+      "args": [
+        "any",
+        "any",
+        "any",
+        "any",
+        "any",
+        "int"
+      ],
+      "format": "put_player %1d% in_RC_mode_at %2d% %3d% %4d% angle %5d% RC_model %6m%",
+      "desc": "Puts the player in control of a remote-control vehicle"
+    },
+    "0x046f": {
+      "name": "GET_CURRENT_PLAYER_WEAPON",
+      "args": 2,
+      "format": "store_player %1d% currently_armed_weapon_to %2d%",
+      "desc": "Returns the type of weapon that the player is currently holding"
+    },
+    "0x0470": {
+      "name": "GET_CURRENT_CHAR_WEAPON",
+      "args": 2,
+      "format": "get_current_char_weapon %1d% %2d%",
+      "desc": "Returns the type of weapon that the character is currently holding"
+    },
+    "0x0471": {
+      "name": "LOCATE_CHAR_ANY_MEANS_OBJECT_2D",
+      "args": 5,
+      "flags": [
+        "condition"
+      ],
+      "format": "  locate_char_any_means_object_2d %1d% %2d% %3d% %4d% %5d%",
+      "desc": "Returns true if the character is within the 2D radius of the object"
+    },
+    "0x0472": {
+      "name": "LOCATE_CHAR_ON_FOOT_OBJECT_2D",
+      "args": 5,
+      "flags": [
+        "condition"
+      ],
+      "format": "  locate_char_on_foot_object_2d %1d% %2d% %3d% %4d% %5d%",
+      "desc": "Returns true if the character is within the 2D radius of the object on foot"
+    },
+    "0x0473": {
+      "name": "LOCATE_CHAR_IN_CAR_OBJECT_2D",
+      "args": 5,
+      "flags": [
+        "condition"
+      ],
+      "format": "  locate_char_in_car_object_2d %1d% %2d% %3d% %4d% %5d%",
+      "desc": "Returns true if the character is within the 2D radius of the object in a vehicle"
+    },
+    "0x0474": {
+      "name": "LOCATE_CHAR_ANY_MEANS_OBJECT_3D",
+      "args": 6,
+      "flags": [
+        "condition"
+      ],
+      "format": "  locate_char_any_means_object_3d %1d% %2d% %3d% %4d% %5d% %6d%",
+      "desc": "Returns true if the character is within the 3D radius of the object"
+    },
+    "0x0475": {
+      "name": "LOCATE_CHAR_ON_FOOT_OBJECT_3D",
+      "args": 6,
+      "flags": [
+        "condition"
+      ],
+      "format": "  locate_char_on_foot_object_3d %1d% %2d% %3d% %4d% %5d% %6d%",
+      "desc": "Returns true if the character is within the 3D radius of the object on foot"
+    },
+    "0x0476": {
+      "name": "LOCATE_CHAR_IN_CAR_OBJECT_3D",
+      "args": 6,
+      "flags": [
+        "condition"
+      ],
+      "format": "  locate_char_in_car_object_3d %1d% %2d% %3d% %4d% %5d% %6d%",
+      "desc": "Returns true if the character is within the 3D radius of the object in a vehicle"
+    },
+    "0x0477": {
+      "name": "SET_CAR_HANDBRAKE_TURN_LEFT",
+      "args": 2,
+      "format": "set_car_handbrake_turn_left %1d% %2d%",
+      "desc": "Makes the AI driver in the vehicle turn hard left and brake for the specified period of time"
+    },
+    "0x0478": {
+      "name": "SET_CAR_HANDBRAKE_TURN_RIGHT",
+      "args": 2,
+      "format": "set_car_handbrake_turn_right %1d% %2d%",
+      "desc": "Makes the AI driver in the vehicle turn hard right and brake for the specified period of time"
+    },
+    "0x0479": {
+      "name": "SET_CAR_HANDBRAKE_STOP",
+      "args": 2,
+      "format": "set_car_handbrake_stop %1d% %2d%",
+      "desc": "Makes the AI driver in the vehicle brake for the specified period of time"
+    },
+    "0x047a": {
+      "name": "IS_CHAR_ON_ANY_BIKE",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_char_on_any_bike %1d%",
+      "desc": "Returns true if the character is driving a bike"
+    },
+    "0x047b": {
+      "name": "LOCATE_SNIPER_BULLET_2D",
+      "args": 5,
+      "flags": [
+        "condition"
+      ],
+      "format": "  sniper_bullet_at %1d% %2d% radius %3d% %4d% sphere %5d%",
+      "desc": "Returns true if a sniper bullet is flying in the specified 2D area"
+    },
+    "0x047c": {
+      "name": "LOCATE_SNIPER_BULLET_3D",
+      "args": 7,
+      "flags": [
+        "condition"
+      ],
+      "format": "  sniper_bullet_at %1d% %2d% %3d% radius %4d% %5d% %6d% sphere %7d%",
+      "desc": "Returns true if a sniper bullet is flying in the specified 3D area"
+    },
+    "0x047d": {
+      "name": "GET_NUMBER_OF_SEATS_IN_MODEL",
+      "args": 2,
+      "format": "get_number_of_seats_in_model %1d% store_to %2d%",
+      "desc": "Returns the number of seats in the vehicle model"
+    },
+    "0x047e": {
+      "name": "IS_PLAYER_ON_ANY_BIKE",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  player %1d% driving_a_motorbike",
+      "desc": "Returns true if the player is driving a bike"
+    },
+    "0x047f": {
+      "name": "IS_CHAR_LYING_DOWN",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_char_lying_down %1d%",
+      "desc": "Returns true if the character has fallen"
+    },
+    "0x0480": {
+      "name": "CAN_CHAR_SEE_DEAD_CHAR",
+      "args": 2,
+      "flags": [
+        "condition"
+      ],
+      "format": "  can_char_see_dead_char %1d% %2d%",
+      "desc": "Returns true if the character sees a dead body of the given type"
+    },
+    "0x0481": {
+      "name": "SET_ENTER_CAR_RANGE_MULTIPLIER",
+      "args": 1,
+      "format": "set_enter_car_range_multiplier %1d%",
+      "desc": "Sets a multiplier for the range of a character's ability to go and occupy a vehicle"
+    },
+    "0x0482": {
+      "name": "SET_THREAT_REACTION_RANGE_MULTIPLIER",
+      "args": 1,
+      "format": "set_threat_reaction_range_multiplier %1d%",
+      "desc": "Sets a multiplier for the range of a character's ability to react on deadly events around",
+      "comment": "gta3 1.0 only"
+    }
+  },
+  "debug": {
+    "unsupported": []
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema/configuration.json",
+  "meta": {
+    "timestamp": "2022-02-06T13:38:22.227756+00:00",
+    "sources": [
+      "https://github.com/sannybuilder/data",
+      "https://github.com/sannybuilder/library"
+    ]
+  },
+  "version": "gtavc_ps2",
+  "parent": "gtavc",
+  "commands": {},
+  "debug": {
+    "unsupported": []
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema/configuration.json",
+  "meta": {
+    "timestamp": "2022-02-06T13:38:21.773970+00:00",
+    "sources": [
+      "https://github.com/sannybuilder/data",
+      "https://github.com/sannybuilder/library"
+    ]
+  },
+  "version": "gta3_ps2",
+  "parent": "gta3",
+  "commands": {},
+  "debug": {
+    "unsupported": []
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "$schema": "../schema/configuration.json",
+  "meta": {
+    "timestamp": "2022-02-06T13:38:22.311532+00:00",
+    "sources": [
+      "https://github.com/sannybuilder/data",
+      "https://github.com/sannybuilder/library"
+    ]
+  },
+  "version": "gtavc_xbox",
+  "parent": "gtavc",
+  "commands": {
+    "0x059c": {
+      "name": "SET_ONSCREEN_COUNTER_FLASH_WHEN_FIRST_DISPLAYED",
+      "args": 2,
+      "format": "NOP %1d% %2d%"
+    },
+    "0x059d": {
+      "name": "SHUFFLE_CARD_DECKS",
+      "args": 1,
+      "format": "shuffle_card_decks %1d%",
+      "comment": "never used in VC"
+    },
+    "0x059e": {
+      "name": "FETCH_NEXT_CARD",
+      "args": 1,
+      "format": "get_card_to %1d%",
+      "comment": "never used in VC"
+    },
+    "0x059f": {
+      "name": "GET_OBJECT_VELOCITY",
+      "args": 4,
+      "format": "get_object %1d% velocity %2d% %3d% %4d%",
+      "comment": "never used in VC"
+    },
+    "0x05a0": {
+      "name": "IS_DEBUG_CAMERA_ON",
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_unused_camera_world_viewer_being_used"
+    },
+    "0x05a1": {
+      "name": "ADD_TO_OBJECT_ROTATION_VELOCITY",
+      "args": 4,
+      "format": "set_object %1d% rotation_velocity_about_an_axis %2d% %3d% %4d%",
+      "comment": "never used in VC"
+    },
+    "0x05a2": {
+      "name": "SET_OBJECT_ROTATION_VELOCITY",
+      "args": 4,
+      "format": "set_object %1d% rotation_velocity_about_an_axis %2d% %3d% %4d%",
+      "comment": "never used in VC"
+    },
+    "0x05a3": {
+      "name": "IS_OBJECT_STATIC",
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  object %1d% stopped",
+      "comment": "never used in VC"
+    },
+    "0x05a4": {
+      "name": "GET_ANGLE_BETWEEN_2D_VECTORS",
+      "args": 5,
+      "format": "get_angle_between_vectors_origin_to %1d% %2d% and_origin_to %3d% %4d% store_to %5d%",
+      "comment": "never used in VC"
+    },
+    "0x05a5": {
+      "name": "DO_2D_RECTANGLES_COLLIDE",
+      "args": 8,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_area_center %1d% %2d% scale %3d% %4d% overlaping_area_center %5d% %6d% scale %7d% %8d%"
+    },
+    "0x05a6": {
+      "name": "GET_OBJECT_ROTATION_VELOCITY",
+      "args": 4,
+      "format": "get_object %1d% rotation_velocity %2d% %3d% %4d%",
+      "comment": "never used in VC"
+    },
+    "0x05a7": {
+      "name": "ADD_VELOCITY_RELATIVE_TO_OBJECT_VELOCITY",
+      "args": 4,
+      "format": "set_object %1d% velocity %2d% %3d% %4d%",
+      "comment": "never used in VC"
+    },
+    "0x05a8": {
+      "name": "GET_OBJECT_SPEED",
+      "args": 2,
+      "format": "get_object %1d% speed_to %2d%",
+      "comment": "never used in VC"
+    },
+    "0x05a9": {
+      "name": "MARK_CUTSCENE_START",
+      "flags": [
+        "unsupported"
+      ]
+    },
+    "0x05aa": {
+      "name": "MARK_CUTSCENE_END",
+      "flags": [
+        "unsupported"
+      ]
+    },
+    "0x05ab": {
+      "name": "CUTSCENE_SCROLL",
+      "flags": [
+        "unsupported"
+      ]
+    }
+  },
+  "debug": {
+    "unsupported": [
+      "MARK_CUTSCENE_START",
+      "MARK_CUTSCENE_END",
+      "CUTSCENE_SCROLL"
+    ]
+  }
+}

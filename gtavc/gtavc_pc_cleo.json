@@ -1,0 +1,968 @@
+{
+  "$schema": "../schema/configuration.json",
+  "meta": {
+    "timestamp": "2022-02-06T13:38:22.486064+00:00",
+    "sources": [
+      "https://github.com/sannybuilder/data",
+      "https://github.com/sannybuilder/library"
+    ]
+  },
+  "version": "gtavc_pc_cleo",
+  "parent": "gtavc_pc",
+  "commands": {
+    "0x05dc": {
+      "format": "terminate_this_custom_script",
+      "desc": "Ends the current custom script, preventing further execution"
+    },
+    "0x05dd": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        }
+      ],
+      "format": "terminate_all_custom_scripts_with_this_name %1s%",
+      "desc": "Ends the custom CLEO scripts with the specified name, freeing game memory"
+    },
+    "0x05de": {
+      "format": "stream_custom_script %1s%",
+      "desc": "Loads a file with compiled SCM instructions at the given path and runs a new custom script(Maximum 7 characters)"
+    },
+    "0x05df": {
+      "args": 4,
+      "format": "write_memory %1d% size %2d% value %3d% virtual_protect %4d%",
+      "desc": "Writes a value to the game memory"
+    },
+    "0x05e0": {
+      "args": 4,
+      "format": "%4d% = read_memory %1d% size %2d% virtual_protect %3d%",
+      "desc": "Reads a value from the game memory"
+    },
+    "0x05e1": {
+      "format": "call_function %1d% num_params %2h% pop %3h%",
+      "desc": "Calls a function at the address with the given arguments and the calling convention defined by the pop parameter where 0 means 'stdcall' and a value equal to numParams means 'cdecl'"
+    },
+    "0x05e2": {
+      "format": "call_function_return %1d% num_params %2h% pop %3h%",
+      "desc": "Calls a function similarly to 05E1 and writes the result into the variable following the arguments list"
+    },
+    "0x05e3": {
+      "format": "call_method %1d% struct %2d% num_params %3h% pop %4h%",
+      "desc": "Calls a method of the object (struct) with the given arguments and the 'thiscall' calling convention (pop is always 0)"
+    },
+    "0x05e4": {
+      "format": "call_method_return %1d% struct %2d% num_params %3h% pop %4h%",
+      "desc": "Calls a method of the object (struct) similarly to 05E3 and writes the result into the variable following the arguments list"
+    },
+    "0x05e5": {
+      "args": 1,
+      "format": "%1d% = game_version",
+      "desc": "Returns the version id of the game"
+    },
+    "0x05e6": {
+      "args": [
+        "int",
+        "any"
+      ],
+      "format": "%2d% = ped %1h% struct",
+      "desc": "Gets the address of the ped struct in the game memory by its handle"
+    },
+    "0x05e7": {
+      "args": [
+        "int",
+        "any"
+      ],
+      "format": "%2d% = vehicle %1h% struct",
+      "desc": "Gets the address of the vehicle struct in the game memory by its handle"
+    },
+    "0x05e8": {
+      "args": [
+        "int",
+        "any"
+      ],
+      "format": "%2d% = object %1h% struct",
+      "desc": "Gets the address of the object struct in the game memory by its handle"
+    },
+    "0x05e9": {
+      "args": [
+        "any",
+        "int"
+      ],
+      "format": "%2h% = ped_struct %1d% handle",
+      "desc": "Gets the corresponding handle of the char located at the given address in memory"
+    },
+    "0x05ea": {
+      "args": [
+        "any",
+        "int"
+      ],
+      "format": "%2h% = vehicle_struct %1d% handle",
+      "desc": "Gets the corresponding handle of the vehicle located at the given address in memory"
+    },
+    "0x05eb": {
+      "args": [
+        "any",
+        "int"
+      ],
+      "format": "%2h% = object_struct %1d% handle",
+      "desc": "Gets the corresponding handle of the object located at the given address in memory"
+    },
+    "0x05ec": {
+      "args": 1,
+      "format": "%1d% = get_this_script_struct",
+      "desc": "Gets the address of the script struct in the game memory"
+    },
+    "0x05ed": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any"
+      ],
+      "format": "%2d% = get_script_struct_named %1s%",
+      "desc": "Gets the address of a running script which name matches the given string or 0 otherwise"
+    },
+    "0x05ee": {
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  key_pressed %1d%",
+      "desc": "Returns true if the player is pressing a keyboard button with the specified code",
+      "comment": "VK_..."
+    },
+    "0x05ef": {
+      "args": [
+        "any",
+        "any",
+        "any",
+        "any",
+        "int",
+        "int",
+        "any"
+      ],
+      "format": "%7d% = random_actor_near_point %1d% %2d% %3d% in_radius %4d% find_next %5h% pass_deads %6h%",
+      "comment": "IF and SET"
+    },
+    "0x05f0": {
+      "args": [
+        "any",
+        "any",
+        "any",
+        "any",
+        "int",
+        "int",
+        "any"
+      ],
+      "format": "%7d% = random_vehicle_near_point %1d% %2d% %3d% in_radius %4d% find_next %5h% pass_wrecked %6h%",
+      "comment": "IF and SET"
+    },
+    "0x05f1": {
+      "args": [
+        "any",
+        "any",
+        "any",
+        "any",
+        "int",
+        "any"
+      ],
+      "format": "%6d% = random_object_near_point %1d% %2d% %3d% in_radius %4d% find_next %5h%",
+      "comment": "IF and SET"
+    },
+    "0x05f2": {
+      "args": 1,
+      "format": "%1d% = pop_float"
+    },
+    "0x05f3": {
+      "args": 3,
+      "format": "%3d% = pow %1d% base %2d%",
+      "desc": "Returns the specified number raised to the specified power",
+      "comment": "all floats"
+    },
+    "0x05f4": {
+      "args": 3,
+      "format": "%3d% = log %1d% base %2d%",
+      "desc": "Returns the logarithm of the specified number in the specified base",
+      "comment": "all floats"
+    },
+    "0x05f5": {
+      "format": "cleo_call %1p% params_count %2d%"
+    },
+    "0x05f6": {
+      "format": "cleo_return %1d%"
+    },
+    "0x05f7": {
+      "args": [
+        "address",
+        "any"
+      ],
+      "format": " %2d% = label %1p% pointer",
+      "desc": "Stores the absolute address of a code location marked with the label"
+    },
+    "0x05f8": {
+      "args": 2,
+      "format": " %2d% = var %1d% pointer",
+      "desc": "Stores the absolute address of the variable"
+    },
+    "0x05f9": {
+      "args": 3,
+      "format": " %3d% = %1d% AND %2d%"
+    },
+    "0x05fa": {
+      "args": 3,
+      "format": " %3d% = %1d% OR %2d%"
+    },
+    "0x05fb": {
+      "args": 3,
+      "format": " %3d% = %1d% XOR %2d%"
+    },
+    "0x05fc": {
+      "args": 2,
+      "format": " %2d% = NOT %1d%"
+    },
+    "0x05fd": {
+      "args": 3,
+      "format": " %3d% = %1d% MOD %2d%"
+    },
+    "0x05fe": {
+      "args": 3,
+      "format": " %3d% = %1d% SHR %2d%"
+    },
+    "0x05ff": {
+      "args": 3,
+      "format": " %3d% = %1d% SHL %2d%"
+    },
+    "0x0601": {
+      "args": 2,
+      "format": " is_button_pressed_on_pad %1d% with_sensitivity %2d%",
+      "desc": "Returns true if the pad's button is pressed with a certain sensitivity"
+    },
+    "0x0602": {
+      "args": 2,
+      "format": " emulate_button_press_on_pad %1d% with_sensitivity %2d%",
+      "desc": "Sets emulate and press pad's button"
+    },
+    "0x0603": {
+      "format": " is_camera_in_widescreen_mode",
+      "desc": "Returns true if the camera is in widescreen mode"
+    },
+    "0x0604": {
+      "args": 2,
+      "format": " %2d% = weapon %1d% model",
+      "desc": "Gets the model ID of the weapon according to the weapon type"
+    },
+    "0x0605": {
+      "args": 2,
+      "format": " %2d% = model %1d% weapon id",
+      "desc": "Gets the type of weapon according to the model ID of the weapon"
+    },
+    "0x0606": {
+      "args": 3,
+      "format": " set_memory_offset memory_pointer %1d% memory_to_point %2d% virtual_protect %3d%"
+    },
+    "0x0607": {
+      "args": 1,
+      "format": " %1d% = get_current_weather",
+      "desc": "Gets the current weather ID"
+    },
+    "0x0608": {
+      "args": 3,
+      "format": " show_text_position %1d% %2d% text %3d%"
+    },
+    "0x0609": {
+      "format": " show_formatted_text_position %1d% %2d% text %3d%"
+    },
+    "0x0673": {
+      "args": [
+        "any",
+        "any",
+        "any",
+        "float"
+      ],
+      "format": "play_animation on actor %1d% animgroup %2d% anim %3d% blendfactor %4f%",
+      "desc": "Sets the character to play a certain action"
+    },
+    "0x0a8c": {
+      "args": 4,
+      "format": "write_memory %1d% size %2d% value %3d% virtual_protect %4d%",
+      "desc": "Writes a value to the game memory"
+    },
+    "0x0a8d": {
+      "args": 4,
+      "format": "%4d% = read_memory %1d% size %2d% virtual_protect %3d%",
+      "desc": "Reads a value from the game memory"
+    },
+    "0x0a8e": {
+      "args": 3,
+      "format": "%3d% = %1d% + %2d%",
+      "desc": "Adds together two integer values and writes the result into the variable",
+      "comment": "int"
+    },
+    "0x0a8f": {
+      "args": 3,
+      "format": "%3d% = %1d% - %2d%",
+      "desc": "Subtracts the integer value from another integer value and writes the result into the variable",
+      "comment": "int"
+    },
+    "0x0a90": {
+      "args": 3,
+      "format": "%3d% = %1d% * %2d%",
+      "desc": "Multiplies two integer values and writes the result into the variable",
+      "comment": "int"
+    },
+    "0x0a91": {
+      "args": 3,
+      "format": "%3d% = %1d% / %2d%",
+      "desc": "Divides the integer value by another integer value and writes the result into the variable",
+      "comment": "int"
+    },
+    "0x0a92": {
+      "format": "stream_custom_script %1s%",
+      "desc": "Loads a file with compiled SCM instructions at the given path and runs a new custom script"
+    },
+    "0x0a93": {
+      "format": "terminate_this_custom_script",
+      "desc": "Ends the current custom script, preventing further execution"
+    },
+    "0x0a96": {
+      "args": 2,
+      "format": "%2d% = ped %1d% struct",
+      "desc": "Gets the address of the ped struct in the game memory by its handle"
+    },
+    "0x0a97": {
+      "args": 2,
+      "format": "%2d% = vehicle %1d% struct",
+      "desc": "Gets the address of the vehicle struct in the game memory by its handle"
+    },
+    "0x0a98": {
+      "args": 2,
+      "format": "%2d% = object %1d% struct",
+      "desc": "Gets the address of the object struct in the game memory by its handle"
+    },
+    "0x0a99": {
+      "args": [
+        "int"
+      ],
+      "format": "set_current_directory %1buserdir/rootdir%",
+      "desc": "Sets the current working directory (cwd) to a predefined location with a value of 0 or 1, or to an arbitrary path with a string value"
+    },
+    "0x0a9a": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any",
+        "any"
+      ],
+      "format": "%3d% = open_file %1s% mode %2d%",
+      "desc": "Opens the file in the specified mode, sets the condition result to True if the open operation has been successful, or to False otherwise, and writes the file handle to the variable",
+      "comment": "IF and SET"
+    },
+    "0x0a9b": {
+      "args": 1,
+      "format": "close_file %1d%",
+      "desc": "Closes the file and frees the memory"
+    },
+    "0x0a9c": {
+      "args": 2,
+      "format": "%2d% = file %1d% size",
+      "desc": "Gets the file size in bytes"
+    },
+    "0x0a9d": {
+      "args": 3,
+      "format": "read_file %1d% size %2d% to %3d%",
+      "desc": "Reads the specified number of bytes from the opened file and writes them to the memory region starting from the address of the destination variable"
+    },
+    "0x0a9e": {
+      "args": 3,
+      "format": "write_file %1d% size %2d% from %3d%",
+      "desc": "Copies the specified number of bytes of the memory region starting from the address of the source variable to the file"
+    },
+    "0x0a9f": {
+      "args": 1,
+      "format": "%1d% = get_this_script_struct",
+      "desc": "Gets the address of the current script structure in the game memory"
+    },
+    "0x0aa0": {
+      "args": [
+        "address"
+      ],
+      "format": "gosub_if_false %1p%",
+      "desc": "Transfers the script execution to the label as a subroutine if the result of the condition is false"
+    },
+    "0x0aa1": {
+      "format": "return_if_false",
+      "desc": "Returns from the current subroutine if the result of the condition is false"
+    },
+    "0x0aa2": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "int"
+      ],
+      "format": "%2h% = load_dynamic_library %1s%",
+      "comment": "IF and SET"
+    },
+    "0x0aa3": {
+      "args": [
+        "int"
+      ],
+      "format": "free_dynamic_library %1h%"
+    },
+    "0x0aa4": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any",
+        "any"
+      ],
+      "format": "%3d% = get_dynamic_library_procedure %1s% library %2d%",
+      "comment": "IF and SET"
+    },
+    "0x0aa5": {
+      "format": "call_function %1d% num_params %2h% pop %3h%",
+      "desc": "Calls a function at the address with the given arguments and the calling convention defined by the pop parameter where 0 means 'stdcall' and a value equal to numParams means  'cdecl'"
+    },
+    "0x0aa6": {
+      "format": "call_method %1d% struct %2d% num_params %3h% pop %4h%",
+      "desc": "Calls a method of the object (struct) with the given arguments and the 'thiscall' calling convention (pop is always 0)"
+    },
+    "0x0aa7": {
+      "format": "call_function_return %1d% num_params %2h% pop %3h%",
+      "desc": "Calls a function similarly to 0AA5 and writes the result into the variable following the arguments list"
+    },
+    "0x0aa8": {
+      "format": "call_method_return %1d% struct %2d% num_params %3h% pop %4h%",
+      "desc": "Calls a method of the object (struct) similarly to 0AA6 and writes the result into the variable following the arguments list"
+    },
+    "0x0aa9": {
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_game_version_original",
+      "desc": "Returns true if the game version is vanilla 1.0"
+    },
+    "0x0aaa": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any"
+      ],
+      "format": "%2d% = get_script_struct_named %1s%",
+      "desc": "Gets the address of a running script which name matches the given string or 0 otherwise"
+    },
+    "0x0aab": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        }
+      ],
+      "flags": [
+        "condition"
+      ],
+      "format": "  does_file_exist %1s%",
+      "desc": "Returns true if a file at the given path exists"
+    },
+    "0x0ab0": {
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_key_pressed %1d%",
+      "desc": "Returns true if the player is pressing a keyboard button with the specified code"
+    },
+    "0x0ab1": {
+      "format": "cleo_call %1p%"
+    },
+    "0x0ab2": {
+      "format": "cleo_return %1d%"
+    },
+    "0x0aba": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        }
+      ],
+      "format": "terminate_all_custom_scripts_with_this_name %1s%",
+      "desc": "Ends the custom CLEO scripts with the specified name, freeing game memory"
+    },
+    "0x0ac6": {
+      "args": [
+        "address",
+        "any"
+      ],
+      "format": "%2d% = label %1p% pointer",
+      "desc": "Stores the absolute address of a code location marked with the label"
+    },
+    "0x0ac7": {
+      "args": 2,
+      "format": "%2d% = var %1d% pointer",
+      "desc": "Stores the absolute address of the variable"
+    },
+    "0x0ac8": {
+      "args": 2,
+      "format": "%2d% = allocate_memory_size %1d%",
+      "desc": "Allocates a chunk of memory of the given size and stores its address to the variable"
+    },
+    "0x0ac9": {
+      "args": 1,
+      "format": "free_allocated_memory %1d%",
+      "desc": "Frees the memory allocated with 0AC8"
+    },
+    "0x0aca": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        }
+      ],
+      "format": "show_text_box %1s%"
+    },
+    "0x0acb": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any",
+        "any"
+      ],
+      "format": "show_styled_text %1s% time %2d% style %3d%"
+    },
+    "0x0acc": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any"
+      ],
+      "format": "show_text_lowpriority %1s% time %2d%",
+      "desc": "Displays the text (provided as a string literal or an address) similarly to 00BB"
+    },
+    "0x0acd": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any"
+      ],
+      "format": "show_text_highpriority %1s% time %2d%"
+    },
+    "0x0ace": {
+      "format": "show_formatted_text_box %1s%",
+      "desc": "Displays a black text box for a few seconds respecting the format of the String entered"
+    },
+    "0x0acf": {
+      "format": "show_formatted_styled_text %1s% time %2d% style %3d%",
+      "desc": "Displays a styled message for the specified time respecting the format of the String entered"
+    },
+    "0x0ad0": {
+      "format": "show_formatted_text_lowpriority %1s% time %2s%"
+    },
+    "0x0ad1": {
+      "format": "show_formatted_text_highpriority %1s% time %2s%"
+    },
+    "0x0ad3": {
+      "format": "%1d% = string_format %2s%"
+    },
+    "0x0ad4": {
+      "format": "%3d% = scan_string %1d% format %2s%"
+    },
+    "0x0ad5": {
+      "args": 3,
+      "format": "file %1d% seek %2d% from_origin %3d%",
+      "desc": "Sets the position of the file to the given offset from the origin",
+      "comment": "IF and SET"
+    },
+    "0x0ad6": {
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  is_end_of_file_reached %1d%",
+      "desc": "Returns true if the end of the specified file has been reached"
+    },
+    "0x0ad7": {
+      "args": 3,
+      "format": "read_string_from_file %1d% to %2d% size %3d%",
+      "desc": "Reads data from the file into the buffer until either the end of buffer is reached, the newline character is read, or the end-of-file is reached, whichever comes first",
+      "comment": "IF and SET"
+    },
+    "0x0ad8": {
+      "args": 2,
+      "format": "write_string_to_file %1d% from %2d%",
+      "desc": "Copies data from the source string to the file up to but not including the null character",
+      "comment": "IF and SET"
+    },
+    "0x0ad9": {
+      "format": "write_formatted_text %2d% to_file %1d%",
+      "desc": "Writes a formatted string to the file"
+    },
+    "0x0ada": {
+      "format": "%3d% = scan_file %1d% format %2d%",
+      "comment": "IF and SET"
+    },
+    "0x0adb": {
+      "args": [
+        "model",
+        "any"
+      ],
+      "format": "%2d% = vehicle_model %1o% name"
+    },
+    "0x0adc": {
+      "args": 1,
+      "flags": [
+        "condition"
+      ],
+      "format": "  test_cheat %1d%",
+      "desc": "Returns true if the specified string of letters has been typed on the keyboard"
+    },
+    "0x0add": {
+      "args": [
+        "model"
+      ],
+      "format": "spawn_car_with_model %1o% like_a_cheat",
+      "desc": "Creates a vehicle with the model (no pre-loading needed) in front of the player"
+    },
+    "0x0ade": {
+      "args": 2,
+      "format": "%2d% = text_label_string %1d%"
+    },
+    "0x0adf": {
+      "args": 2,
+      "format": "add_text_label %1d% text %2d%"
+    },
+    "0x0ae0": {
+      "args": 1,
+      "format": "remove_text_label %1d%"
+    },
+    "0x0ae1": {
+      "args": [
+        "any",
+        "any",
+        "any",
+        "any",
+        "int",
+        "int",
+        "any"
+      ],
+      "format": "%7d% = random_actor_near_point %1d% %2d% %3d% in_radius %4d% find_next %5h% pass_deads %6h%",
+      "comment": "IF and SET"
+    },
+    "0x0ae2": {
+      "args": [
+        "any",
+        "any",
+        "any",
+        "any",
+        "int",
+        "int",
+        "any"
+      ],
+      "format": "%7d% = random_vehicle_near_point %1d% %2d% %3d% in_radius %4d% find_next %5h% pass_wrecked %6h%",
+      "comment": "IF and SET"
+    },
+    "0x0ae3": {
+      "args": [
+        "any",
+        "any",
+        "any",
+        "any",
+        "int",
+        "any"
+      ],
+      "format": "%6d% = random_object_near_point %1d% %2d% %3d% in_radius %4d% find_next %5h%",
+      "comment": "IF and SET"
+    },
+    "0x0ae9": {
+      "args": 1,
+      "format": "pop_float %1d%"
+    },
+    "0x0aea": {
+      "args": 2,
+      "format": "%2d% = actor_struct %1d% handle",
+      "desc": "Gets the corresponding handle of the char located at the given address in memory"
+    },
+    "0x0aeb": {
+      "args": 2,
+      "format": "%2d% = vehicle_struct %1d% handle",
+      "desc": "Gets the corresponding handle of the vehicle located at the given address in memory"
+    },
+    "0x0aec": {
+      "args": 2,
+      "format": "%2d% = object_struct %1d% handle",
+      "desc": "Gets the corresponding handle of the object located at the given address in memory"
+    },
+    "0x0aee": {
+      "args": 3,
+      "format": "%3d% = pow %1d% base %2d%",
+      "desc": "Returns the specified number raised to the specified power",
+      "comment": "all floats"
+    },
+    "0x0aef": {
+      "args": 3,
+      "format": "%3d% = log %1d% base %2d%",
+      "desc": "Returns the logarithm of the specified number in the specified base",
+      "comment": "all floats"
+    },
+    "0x0af0": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any"
+      ],
+      "format": "%4d% = read_int_from_ini_file %1s% section %2s% key %3s%",
+      "desc": "Reads an integer value from the ini file"
+    },
+    "0x0af1": {
+      "args": [
+        "any",
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        }
+      ],
+      "format": "write_int %1d% to_ini_file %2s% section %3s% key %4s%",
+      "desc": "Writes the integer value to the ini file"
+    },
+    "0x0af2": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any"
+      ],
+      "format": "%4d% = read_float_from_ini_file %1s% section %2s% key %3s%",
+      "desc": "Reads a floating-point value from the ini file"
+    },
+    "0x0af3": {
+      "args": [
+        "any",
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        }
+      ],
+      "format": "write_float %1d% to_ini_file %2s% section %3s% key %4s%",
+      "desc": "Writes the floating-point value to the ini file"
+    },
+    "0x0af4": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any"
+      ],
+      "format": "%4d% = read_string_from_ini_file %1s% section %2s% key %3s%",
+      "desc": "Reads a string value from the ini file"
+    },
+    "0x0af5": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        {
+          "type": "string",
+          "operand_type": "string8"
+        }
+      ],
+      "format": "write_string %1s% to_ini_file %2s% section %3s% key %4s%",
+      "desc": "Writes the string value to the ini file"
+    },
+    "0x0b00": {
+      "args": 1,
+      "format": "delete_file %1d%",
+      "desc": "Deletes a file at the given path and returns true if the operation is successful",
+      "comment": "IF and SET"
+    },
+    "0x0b01": {
+      "args": 2,
+      "format": "delete_directory %1d% with_all_files_and_subdirectories %2d%",
+      "desc": "Deletes a directory at the given path and returns true if the operation is successful",
+      "comment": "IF and SET"
+    },
+    "0x0b02": {
+      "args": 2,
+      "format": "move_file %1d% to %2d%",
+      "desc": "Moves an existing file and returns true if the operation is successful",
+      "comment": "IF and SET"
+    },
+    "0x0b03": {
+      "args": 2,
+      "format": "move_directory %1d% to %2d%",
+      "desc": "Moves an existing directory and returns true if the operation is successful",
+      "comment": "IF and SET"
+    },
+    "0x0b04": {
+      "args": 2,
+      "format": "copy_file %1d% to %2d%",
+      "desc": "Copies an existing file to a new file and returns true if the operation is successful",
+      "comment": "IF and SET"
+    },
+    "0x0b05": {
+      "args": 2,
+      "format": "copy_directory %1d% to %2d%",
+      "desc": "Copies an existing directory to a new directory and returns true if the operation is successful",
+      "comment": "IF and SET"
+    },
+    "0x0b10": {
+      "args": 3,
+      "format": "%3d% = %1d% AND %2d%"
+    },
+    "0x0b11": {
+      "args": 3,
+      "format": "%3d% = %1d% OR %2d%"
+    },
+    "0x0b12": {
+      "args": 3,
+      "format": "%3d% = %1d% XOR %2d%"
+    },
+    "0x0b13": {
+      "args": 2,
+      "format": "%2d% = NOT %1d%"
+    },
+    "0x0b14": {
+      "args": 3,
+      "format": "%3d% = %1d% MOD %2d%"
+    },
+    "0x0b15": {
+      "args": 3,
+      "format": "%3d% = %1d% SHR %2d%"
+    },
+    "0x0b16": {
+      "args": 3,
+      "format": "%3d% = %1d% SHL %2d%"
+    },
+    "0x0b17": {
+      "args": 2,
+      "format": "%1d% &= %2d%"
+    },
+    "0x0b18": {
+      "args": 2,
+      "format": "%1d% |= %2d%"
+    },
+    "0x0b19": {
+      "args": 2,
+      "format": "%1d% ^= %2d%"
+    },
+    "0x0b1a": {
+      "args": 1,
+      "format": "~ %1d%"
+    },
+    "0x0b1b": {
+      "args": 2,
+      "format": "%1d% %= %2d%"
+    },
+    "0x0b1c": {
+      "args": 2,
+      "format": "%1d% >>= %2d%"
+    },
+    "0x0b1d": {
+      "args": 2,
+      "format": "%1d% <<= %2d%"
+    },
+    "0x0b20": {
+      "args": 2,
+      "format": "read_clipboard_data %1d% size %2d%"
+    },
+    "0x0b21": {
+      "args": 2,
+      "format": "write_clipboard_data %1d% size %2d%"
+    },
+    "0x0ba2": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "int"
+      ],
+      "format": "%2h% = memory_load_library %1s%"
+    },
+    "0x0ba3": {
+      "args": [
+        "int"
+      ],
+      "format": "memory_free_library %1h%"
+    },
+    "0x0ba4": {
+      "args": [
+        {
+          "type": "string",
+          "operand_type": "string8"
+        },
+        "any",
+        "any"
+      ],
+      "format": "%3d% = memory_get_proc_address %1s% library %2d%"
+    }
+  },
+  "debug": {
+    "unsupported": []
+  }
+}

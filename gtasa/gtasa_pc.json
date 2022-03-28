@@ -1,0 +1,63 @@
+{
+  "$schema": "../schema/configuration.json",
+  "meta": {
+    "timestamp": "2022-02-06T13:38:23.450485+00:00",
+    "sources": [
+      "https://github.com/sannybuilder/data",
+      "https://github.com/sannybuilder/library"
+    ]
+  },
+  "version": "gtasa_pc",
+  "parent": "gtasa",
+  "commands": {
+    "0x0a49": {
+      "name": "IS_XBOX_VERSION",
+      "flags": [
+        "condition"
+      ],
+      "format": "  NOP_false",
+      "desc": "Returns true for Xbox versions of the game"
+    },
+    "0x0a4a": {
+      "name": "GET_PC_MOUSE_MOVEMENT",
+      "args": [
+        "int",
+        "int"
+      ],
+      "format": "store_joystick_X_offset_to %1h% Y_offset_to %2h%",
+      "desc": "Gives the offset of the mouse or right thumbstick movement"
+    },
+    "0x0a4b": {
+      "name": "IS_PC_USING_JOYPAD",
+      "flags": [
+        "condition"
+      ],
+      "format": "  controls_set_to_joystick",
+      "desc": "Returns true if players controls are set to joystick and not mouse+keyboard"
+    },
+    "0x0a4c": {
+      "name": "IS_MOUSE_USING_VERTICAL_INVERSION",
+      "flags": [
+        "condition"
+      ],
+      "format": "  mouse_not_inverted_vertically",
+      "desc": "Returns true if the players settings are set to invert the mouse"
+    },
+    "0x0a4d": {
+      "name": "IS_JAPANESE_VERSION",
+      "flags": [
+        "condition"
+      ],
+      "format": "  NOP_false",
+      "desc": "Returns true for Japanese versions of the game"
+    },
+    "0x0a4e": {
+      "name": "DO_DEBUG_STUFF",
+      "format": "increment_useless_flag",
+      "desc": "Returns true on Xbox versions of the game if player 2 is pressing the start button"
+    }
+  },
+  "debug": {
+    "unsupported": []
+  }
+}
